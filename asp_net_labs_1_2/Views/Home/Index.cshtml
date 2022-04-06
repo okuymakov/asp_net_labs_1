@@ -1,0 +1,46 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form class="form" asp-action="Index" asp-controller="Home" method="post">
+
+    <div class="form__item">
+        <label asp-for="Name">Имя:</label><br />
+        <input type="text" asp-for="Name" />
+        <span asp-validation-for="Name" />
+    </div>
+    <div class="form__item">
+        <label>Пол:<br /><input asp-for="Gender" value="м" type="radio" />м</label>
+        <label><input asp-for="Gender" value="ж" type="radio" />ж</label>
+        <span asp-validation-for="Gender" />
+    </div>
+    <div class="form__item">
+        <label asp-for="Group">Группа:</label>
+        <select asp-for="Group" asp-items="new SelectList(Groups.All)"></select>
+        <span asp-validation-for="Group" />
+    </div>
+    <div class="form__item">
+        <label asp-for="Languages">Выберите яп, которыми вы владеете:</label><br />
+        <select asp-for="Languages" asp-items="new SelectList(Languages.All)" size="@Languages.All.Count" multiple></select>
+        <span asp-validation-for="Languages" />
+
+    </div>
+    <div class="form_item">
+        <input type="submit" value="Отправить"/>
+    </div>
+</form>
+@if (ViewBag.IsChecked)
+{
+<div class="result">
+    <p>Имя: @Model.Name</p>
+    <p>Пол: @Model.Gender</p>
+    <p>Группа: @Model.Group</p>
+    <p>Языки: @string.Join(",", Model.Languages)</p>
+</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
